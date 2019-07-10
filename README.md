@@ -1,2 +1,1 @@
-# Back-End
-Back-end repository for Happy App project
+# Back-end repository for Happy App project
