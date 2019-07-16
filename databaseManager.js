@@ -22,3 +22,18 @@ module.exports.saveItem = item => {
       return item.itemId;
     });
 };
+
+module.exports.getItem = itemId => {
+  const params = {
+    Key: {
+      itemId: itemId
+    },
+    TableName: TABLE_NAME
+  };
+  return dynamo
+    .get(params)
+    .promise()
+    .then(result => {
+      return result.Item;
+    });
+};

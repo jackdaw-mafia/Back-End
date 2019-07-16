@@ -20,3 +20,12 @@ module.exports.saveItem = (event, context, callback) => {
     callback(null, createResponse(200, response));
   });
 };
+
+module.exports.getItem = (event, context, callback) => {
+  const itemId = event.pathParameters.itemId;
+
+  databaseManager.getItem(itemId).then(response => {
+    console.log(response);
+    callback(null, createResponse(200, response));
+  });
+};
