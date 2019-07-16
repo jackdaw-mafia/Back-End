@@ -21,7 +21,7 @@ provider:
   name: aws
   runtime: nodejs10.x
   profile: default
-  region: eu-west-1
+  region: eu-west-2
   environment: ${self:custom.settings.${self:custom.myStage}}
 
   iamRoleStatements:
