@@ -19,7 +19,7 @@ module.exports.saveItem = item => {
     .put(params)
     .promise()
     .then(() => {
-      return item.itemId;
+      return item;
     });
 };
 
