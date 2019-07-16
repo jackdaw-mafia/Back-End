@@ -10,11 +10,11 @@ custom:
   myStage: ${opt:stage, self:provider.stage}
   settings:
     test:
-      ITEMS_DYNAMODB_TABLE: sls-basic-operations-items-test
+      ITEMS_DYNAMODB_TABLE: sls-appy-app-test
     dev:
-      ITEMS_DYNAMODB_TABLE: sls-basic-operations-items-dev
+      ITEMS_DYNAMODB_TABLE: sls-appy-app-dev
     prod:
-      ITEMS_DYNAMODB_TABLE: sls-basic-operations-items-prod
+      ITEMS_DYNAMODB_TABLE: sls-appy-app-prod
   
 
 provider:
