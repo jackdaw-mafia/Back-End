@@ -53,3 +53,23 @@ module.exports.deleteItem = itemId => {
       return result;
     });
 };
+
+module.exports.updateItem = (itemId, paramsName, paramsValue) => {
+  const params = {
+    TableName: TABLE_NAME,
+    Key: {
+      itemId
+    },
+    UpdateExpression: "set " + paramsName + " = :v",
+    ExpressionAttributeValues: {
+      ":v": paramsValue
+    },
+    ReturnValues: "ALL_NEW"
+  };
+  return dynamo
+    .update(params)
+    .promise()
+    .then(response => {
+      return response.Attributes;
+    });
+};

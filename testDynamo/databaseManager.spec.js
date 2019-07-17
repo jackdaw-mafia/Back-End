@@ -85,4 +85,15 @@ describe("Test database", () => {
       done();
     });
   });
+  it("updates an item", done => {
+    const paramName = "address";
+    const paramValue = "Ancoats";
+    databaseManager.updateItem("itemId", paramName, paramValue).then(result => {
+      // console.log(result);
+      // console.log(item.address);
+      console.log(result);
+      assert.equal(result.address, "Ancoats");
+      done();
+    });
+  });
 });
