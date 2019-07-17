@@ -27,6 +27,8 @@ provider:
   iamRoleStatements:
     - Effect: "Allow"
       Action:
+        - "dynamodb:Query"
+        - "dynamodb:Scan"
         - "dynamodb:GetItem"
         - "dynamodb:PutItem"
         - "dynamodb:UpdateItem"
@@ -36,30 +38,45 @@ provider:
         - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.${self:custom.myStage}.ITEMS_DYNAMODB_TABLE}"
 
 functions:
-  saveItem:
+  create:
     handler: handler.saveItem
     events:
       - http:
-          path: item
+          path: api/owners
           method: post
-  getItem:
+          cors: true
+      - http:
+          path: api/offers
+          method: post
+          cors: true
+  get:
     handler: handler.getItem
     events:
       - http:
-          path: item/{itemId}
+          path: api/owners/{itemId}
           method: get
-  deleteItem:
+          cors: true
+  list:
+    handler: handler.listItem
+    events:
+      - http:
+          path: api/offers
+          method: get
+          cors: true
+  delete:
     handler: handler.deleteItem
     events:
         - http:
-            path: item/{itemId}
+            path: api/owner/{itemId}
             method: delete
-  updateItem:
+            cors: true
+  update:
     handler: handler.updateItem
     events:
       - http:
-          path: item/{itemId}
+          path: api/owners/{itemId}
           method: put
+          cors: true
   triggerStream:
     handler: handler.triggerStream
     events:
@@ -76,6 +93,7 @@ resources:
   Resources:
     ImagesTable:
       Type: "AWS::DynamoDB::Table"
+      DeletionPolicy: Retain
       Properties:
         AttributeDefinitions:
         - AttributeName: "itemId"
