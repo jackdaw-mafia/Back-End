@@ -20,7 +20,7 @@ afterAll(() => {
   databaseManager.initializateDynamoClient(dynamo);
 });
 
-describe("Test database save and get item", () => {
+describe("Test database", () => {
   const item = {
     itemId: "itemId",
     id: "data.id",
@@ -39,7 +39,7 @@ describe("Test database save and get item", () => {
     updatedAt: "timestamp"
   };
 
-  it("save an item", done => {
+  it("saves/creates an item", done => {
     databaseManager.saveItem(item).then(result => {
       assert.equal("itemId", result.itemId);
       assert.equal(item.id, result.id);
@@ -59,7 +59,7 @@ describe("Test database save and get item", () => {
       done();
     });
   });
-  it("get an item", done => {
+  it("GET an item", done => {
     databaseManager.getItem("itemId").then(result => {
       assert.equal("itemId", result.itemId);
       assert.equal(item.id, result.id);
@@ -76,6 +76,12 @@ describe("Test database save and get item", () => {
       assert.equal(item.place_id, result.place_id);
       assert.equal(item.createdAt, result.createdAt);
       assert.equal(item.updatedAt, result.updatedAt);
+      done();
+    });
+  });
+  it("DELETE an item", done => {
+    databaseManager.deleteItem("itemId").then(result => {
+      assert.isUndefined(result.itemID);
       done();
     });
   });
