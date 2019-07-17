@@ -37,3 +37,19 @@ module.exports.getItem = itemId => {
       return result.Item;
     });
 };
+
+module.exports.deleteItem = itemId => {
+  const params = {
+    Key: {
+      itemId: itemId
+    },
+    TableName: TABLE_NAME
+  };
+
+  return dynamo
+    .delete(params)
+    .promise()
+    .then(result => {
+      return result;
+    });
+};

@@ -29,3 +29,11 @@ module.exports.getItem = (event, context, callback) => {
     callback(null, createResponse(200, response));
   });
 };
+
+module.exports.deleteItem = (event, context, callback) => {
+  const itemId = event.pathParameters.itemId;
+
+  databaseManager.deleteItem(itemId).then(response => {
+    callback(null, createResponse(204, response));
+  });
+};
