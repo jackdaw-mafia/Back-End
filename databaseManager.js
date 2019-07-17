@@ -38,6 +38,34 @@ module.exports.getItem = itemId => {
     });
 };
 
+module.exports.listItem = () => {
+  const params = {
+    TableName: TABLE_NAME,
+    FilterExpression: "#dt = :offer",
+    ExpressionAttributeNames: {
+      "#dt": "data_type"
+    },
+    ExpressionAttributeValues: {
+      ":offer": "offer"
+    }
+  };
+  return dynamo
+    .scan(params)
+    .promise()
+    .then(result => {
+      //console.log(result);
+      const itemsArray = result.Items;
+      const updatedResult = itemsArray.map(item => {
+        const { createdAt, duration } = item;
+        const finishesAt = 60000 * duration + createdAt;
+        const newItem = { ...item, finishesAt: finishesAt };
+        return newItem;
+      });
+      //console.log(updatedResult);
+      return updatedResult;
+    });
+};
+
 module.exports.deleteItem = itemId => {
   const params = {
     Key: {

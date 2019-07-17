@@ -12,8 +12,10 @@ function createResponse(statusCode, message) {
 
 module.exports.saveItem = (event, context, callback) => {
   const item = JSON.parse(event.body);
+  const timestamp = new Date().getTime();
   console.log(item);
   item.itemId = uuidv1();
+  item.createdAt = timestamp;
 
   databaseManager.saveItem(item).then(response => {
     console.log(response);
@@ -30,6 +32,15 @@ module.exports.getItem = (event, context, callback) => {
   });
 };
 
+module.exports.listItem = (event, context, callback) => {
+  // const itemId = event.pathParameters.itemId;
+
+  databaseManager.listItem().then(response => {
+    console.log(response);
+    callback(null, createResponse(200, response));
+  });
+};
+
 module.exports.deleteItem = (event, context, callback) => {
   const itemId = event.pathParameters.itemId;
 
@@ -40,10 +51,11 @@ module.exports.deleteItem = (event, context, callback) => {
 
 module.exports.updateItem = (event, context, callback) => {
   const itemId = event.pathParameters.itemId;
-
+  const timestamp = new Date().getTime();
   const body = JSON.parse(event.body);
   const paramName = body.paramName;
   const paramValue = body.paramValue;
+  body.updatedAt = timestamp;
 
   databaseManager.updateItem(itemId, paramName, paramValue).then(response => {
     console.log(response);
