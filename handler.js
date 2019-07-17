@@ -10,7 +10,20 @@ function createResponse(statusCode, message) {
   };
 }
 
-module.exports.saveItem = (event, context, callback) => {
+module.exports.saveProfile = (event, context, callback) => {
+  const item = JSON.parse(event.body);
+  const timestamp = new Date().getTime();
+  console.log(item);
+  //item.itemId = uuidv1();
+  item.createdAt = timestamp;
+
+  databaseManager.saveItem(item).then(response => {
+    console.log(response);
+    callback(null, createResponse(200, response));
+  });
+};
+
+module.exports.saveOffer = (event, context, callback) => {
   const item = JSON.parse(event.body);
   const timestamp = new Date().getTime();
   console.log(item);

@@ -38,13 +38,16 @@ provider:
         - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.${self:custom.myStage}.ITEMS_DYNAMODB_TABLE}"
 
 functions:
-  create:
-    handler: handler.saveItem
+  createOwner:
+    handler: handler.saveProfile
     events:
       - http:
           path: api/owners
           method: post
           cors: true
+  createOffer:
+    handler: handler.saveOffer
+    events:        
       - http:
           path: api/offers
           method: post
