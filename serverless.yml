@@ -77,6 +77,15 @@ functions:
           path: api/owners/{itemId}
           method: put
           cors: true
+
+  getApi:
+    handler: api/endpoints.endpoints
+    events:
+      - http:
+          path: api
+          method: get
+          cors: true
+
   triggerStream:
     handler: handler.triggerStream
     events:
