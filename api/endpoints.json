@@ -144,7 +144,8 @@
           "price": "£2.70",
           "data_type": "offer",
           "createdAt": 1562944155846,
-          "updatedAt": 1562944155846
+          "updatedAt": 1562944155846,
+          "finishedAt": 1234455666543
         },
         {
           "venueName": "Blue Whale",
@@ -156,7 +157,8 @@
           "price": "£1.00",
           "data_type": "offer",
           "createdAt": 1562944155846,
-          "updatedAt": 1562944155846
+          "updatedAt": 1562944155846,
+          "finishedAt": 1234455666543
         },
         {
           "venueName": "Green Monster",
@@ -168,7 +170,8 @@
           "price": "£2.70",
           "data_type": "offer",
           "createdAt": 1562944155846,
-          "updatedAt": 1562944155846
+          "updatedAt": 1562944155846,
+          "finishedAt": 1234455666545
         }
       ]
     }
