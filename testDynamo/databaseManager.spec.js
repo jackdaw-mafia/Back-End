@@ -22,7 +22,7 @@ afterAll(() => {
 });
 
 describe("Test database", () => {
-  const profile = {
+  const profile1 = {
     itemId: "itemId",
     id: "data.id",
     data_type: "data.data_type",
@@ -35,9 +35,22 @@ describe("Test database", () => {
     shortDescription: "data.shortDescription",
     longDescription: "data.longDescription",
     phoneNumber: "data.phoneNumber",
-    place_id: "data.place_id",
-    createdAt: "timestamp",
-    updatedAt: "timestamp"
+    place_id: "data.place_id"
+  };
+  const profile2 = {
+    itemId: "itemId",
+    id: "data.id",
+    data_type: "data.data_type",
+    venueName: "data.venueName",
+    address: "data.address",
+    longitude: "data.longitude",
+    latitude: "data.latitude",
+    email: "data.email",
+    photoUri: "CHANGE",
+    shortDescription: "CHANGE",
+    longDescription: "CHANGE",
+    phoneNumber: "data.phoneNumber",
+    place_id: "data.place_id"
   };
 
   const offer1 = {
@@ -69,42 +82,42 @@ describe("Test database", () => {
   };
 
   it("saves/creates an item", done => {
-    databaseManager.saveItem(profile).then(result => {
+    databaseManager.saveItem(profile1).then(result => {
       assert.equal("itemId", result.itemId);
-      assert.equal(profile.id, result.id);
-      assert.equal(profile.data_type, result.data_type);
-      assert.equal(profile.venueName, result.venueName);
-      assert.equal(profile.address, result.address);
-      assert.equal(profile.longtitude, result.longtitude);
-      assert.equal(profile.latitude, result.latitude);
-      assert.equal(profile.email, result.email);
-      assert.equal(profile.photoUri, result.photoUri);
-      assert.equal(profile.shortDescription, result.shortDescription);
-      assert.equal(profile.longDescription, result.longDescription);
-      assert.equal(profile.phoneNumber, result.phoneNumber);
-      assert.equal(profile.place_id, result.place_id);
-      assert.equal(profile.createdAt, result.createdAt);
-      assert.equal(profile.updatedAt, result.updatedAt);
+      assert.equal(profile1.id, result.id);
+      assert.equal(profile1.data_type, result.data_type);
+      assert.equal(profile1.venueName, result.venueName);
+      assert.equal(profile1.address, result.address);
+      assert.equal(profile1.longtitude, result.longtitude);
+      assert.equal(profile1.latitude, result.latitude);
+      assert.equal(profile1.email, result.email);
+      assert.equal(profile1.photoUri, result.photoUri);
+      assert.equal(profile1.shortDescription, result.shortDescription);
+      assert.equal(profile1.longDescription, result.longDescription);
+      assert.equal(profile1.phoneNumber, result.phoneNumber);
+      assert.equal(profile1.place_id, result.place_id);
+      assert.equal(profile1.createdAt, result.createdAt);
+      assert.equal(profile1.updatedAt, result.updatedAt);
       done();
     });
   });
   it("GET an item", done => {
     databaseManager.getItem("itemId").then(result => {
       assert.equal("itemId", result.itemId);
-      assert.equal(profile.id, result.id);
-      assert.equal(profile.data_type, result.data_type);
-      assert.equal(profile.venueName, result.venueName);
-      assert.equal(profile.address, result.address);
-      assert.equal(profile.longtitude, result.longtitude);
-      assert.equal(profile.latitude, result.latitude);
-      assert.equal(profile.email, result.email);
-      assert.equal(profile.photoUri, result.photoUri);
-      assert.equal(profile.shortDescription, result.shortDescription);
-      assert.equal(profile.longDescription, result.longDescription);
-      assert.equal(profile.phoneNumber, result.phoneNumber);
-      assert.equal(profile.place_id, result.place_id);
-      assert.equal(profile.createdAt, result.createdAt);
-      assert.equal(profile.updatedAt, result.updatedAt);
+      assert.equal(profile1.id, result.id);
+      assert.equal(profile1.data_type, result.data_type);
+      assert.equal(profile1.venueName, result.venueName);
+      assert.equal(profile1.address, result.address);
+      assert.equal(profile1.longtitude, result.longtitude);
+      assert.equal(profile1.latitude, result.latitude);
+      assert.equal(profile1.email, result.email);
+      assert.equal(profile1.photoUri, result.photoUri);
+      assert.equal(profile1.shortDescription, result.shortDescription);
+      assert.equal(profile1.longDescription, result.longDescription);
+      assert.equal(profile1.phoneNumber, result.phoneNumber);
+      assert.equal(profile1.place_id, result.place_id);
+      assert.equal(profile1.createdAt, result.createdAt);
+      assert.equal(profile1.updatedAt, result.updatedAt);
       done();
     });
   });
@@ -114,13 +127,38 @@ describe("Test database", () => {
       done();
     });
   });
-  it("updates an item", done => {
+  it("updates an offer one paramName and paramValue at a time", done => {
     const paramName = "address";
     const paramValue = "Ancoats";
-    databaseManager.updateItem("itemId", paramName, paramValue).then(result => {
-      // console.log(result);
-      assert.equal(result.address, "Ancoats");
-      done();
+    databaseManager
+      .updateOffer("itemId", paramName, paramValue)
+      .then(result => {
+        // console.log(result);
+        assert.equal(result.address, "Ancoats");
+        done();
+      });
+  });
+  it("updates a profile all at once", done => {
+    databaseManager.saveItem(profile1).then(result => {
+      databaseManager.updateProfile("itemId", profile2).then(result => {
+        console.log(result);
+        assert.equal("itemId", result.itemId);
+        assert.equal(profile2.id, result.id);
+        assert.equal(profile2.data_type, result.data_type);
+        assert.equal(profile2.venueName, result.venueName);
+        assert.equal(profile2.address, result.address);
+        assert.equal(profile2.longtitude, result.longtitude);
+        assert.equal(profile2.latitude, result.latitude);
+        assert.equal(profile2.email, result.email);
+        assert.equal(profile2.photoUri, result.photoUri);
+        assert.equal(profile2.shortDescription, result.shortDescription);
+        assert.equal(profile2.longDescription, result.longDescription);
+        assert.equal(profile2.phoneNumber, result.phoneNumber);
+        assert.equal(profile2.place_id, result.place_id);
+        assert.equal(profile2.createdAt, result.createdAt);
+        //assert.equal(profile2.updatedAt, result.updatedAt);
+        done();
+      });
     });
   });
   it("LIST items", done => {

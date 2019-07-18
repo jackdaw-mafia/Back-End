@@ -10,7 +10,20 @@ function createResponse(statusCode, message) {
   };
 }
 
-module.exports.saveItem = (event, context, callback) => {
+module.exports.saveProfile = (event, context, callback) => {
+  const item = JSON.parse(event.body);
+  const timestamp = new Date().getTime();
+  console.log(item);
+  //item.itemId = uuidv1();
+  item.createdAt = timestamp;
+
+  databaseManager.saveItem(item).then(response => {
+    console.log(response);
+    callback(null, createResponse(200, response));
+  });
+};
+
+module.exports.saveOffer = (event, context, callback) => {
   const item = JSON.parse(event.body);
   const timestamp = new Date().getTime();
   console.log(item);
@@ -49,7 +62,7 @@ module.exports.deleteItem = (event, context, callback) => {
   });
 };
 
-module.exports.updateItem = (event, context, callback) => {
+module.exports.updateOffer = (event, context, callback) => {
   const itemId = event.pathParameters.itemId;
   const timestamp = new Date().getTime();
   const body = JSON.parse(event.body);
@@ -58,6 +71,19 @@ module.exports.updateItem = (event, context, callback) => {
   body.updatedAt = timestamp;
 
   databaseManager.updateItem(itemId, paramName, paramValue).then(response => {
+    console.log(response);
+    callback(null, createResponse(200, response));
+  });
+};
+
+module.exports.updateProfile = (event, context, callback) => {
+  const itemId = event.pathParameters.itemId;
+  //console.log(itemId);
+  const timestamp = new Date().getTime();
+  const data = JSON.parse(event.body);
+  data.updatedAt = timestamp;
+
+  databaseManager.updateProfile(itemId, data).then(response => {
     console.log(response);
     callback(null, createResponse(200, response));
   });
