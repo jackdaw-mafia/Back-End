@@ -73,8 +73,16 @@ functions:
             path: api/owner/{itemId}
             method: delete
             cors: true
-  update:
-    handler: handler.updateItem
+  updateOffer:
+    handler: handler.updateOffer
+    events:
+      - http:
+          path: api/offers/{itemId}
+          method: put
+          cors: true
+
+  updateProfile:
+    handler: handler.updateProfile
     events:
       - http:
           path: api/owners/{itemId}

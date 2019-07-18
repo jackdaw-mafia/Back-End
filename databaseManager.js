@@ -57,8 +57,10 @@ module.exports.listItem = () => {
       const itemsArray = result.Items;
       const updatedResult = itemsArray.map(item => {
         const { createdAt, duration } = item;
-        const finishesAt = 60000 * duration + createdAt;
-        const newItem = { ...item, finishesAt: finishesAt };
+        const durationMili = 60000 * duration;
+        const finishesAt = durationMili + createdAt;
+        const durationInSeconds = (finishesAt - Date.now()) / 1000;
+        const newItem = { ...item, finishesAt, durationInSeconds };
         return newItem;
       });
       //console.log(updatedResult);
@@ -82,7 +84,7 @@ module.exports.deleteItem = itemId => {
     });
 };
 
-module.exports.updateItem = (itemId, paramsName, paramsValue) => {
+module.exports.updateOffer = (itemId, paramsName, paramsValue) => {
   const params = {
     TableName: TABLE_NAME,
     Key: {
@@ -94,6 +96,34 @@ module.exports.updateItem = (itemId, paramsName, paramsValue) => {
     },
     ReturnValues: "ALL_NEW"
   };
+  return dynamo
+    .update(params)
+    .promise()
+    .then(response => {
+      return response.Attributes;
+    });
+};
+
+module.exports.updateProfile = (itemId, body) => {
+  const timestamp = new Date().getTime();
+  const params = {
+    TableName: TABLE_NAME,
+    Key: {
+      itemId: itemId
+    },
+    ExpressionAttributeValues: {
+      ":email": body.email,
+      ":photoUri": body.photoUri,
+      ":shortDescription": body.shortDescription,
+      ":longDescription": body.longDescription,
+      ":checked": body.checked,
+      ":updatedAt": timestamp
+    },
+    UpdateExpression:
+      "SET email = :email, photoUri = :photoUri, shortDescription = :shortDescription, longDescription = :longDescription, updatedAt = :updatedAt",
+    ReturnValues: "ALL_NEW"
+  };
+
   return dynamo
     .update(params)
     .promise()
