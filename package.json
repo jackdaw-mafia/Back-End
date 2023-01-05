@@ -18,7 +18,7 @@
     "aws-sdk": "^2.171.0",
     "chai": "^4.1.2",
     "dynamodb-local": "0.0.29",
-    "jest": "^22.0.0",
+    "jest": "^29.3.1",
     "serverless-dynamodb-local": "^0.2.38",
     "sls": "^0.1.0",
     "uuid": "^3.1.0"
